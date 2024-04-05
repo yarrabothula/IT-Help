@@ -1,0 +1,39 @@
+#Config Variables
+$CSVPath = "C:\Temp\UsersAndGroups.csv"
+ 
+#Get Data from CSV
+$CSVData =  Import-CSV -Path $CSVPath
+ 
+Try {
+    ForEach($Row in $CSVData)
+    {
+        #Connect to the Site with PnP PowerShell
+        Connect-PnPOnline -Url $Row.SiteURL -Interactive
+      
+        #Check if the group exists already
+        If((Get-PnPGroup | Where { $_.Title -eq $Row.GroupName}) -eq $Null)
+        {
+            #Create SharePoint Online Group
+            $Group = New-PnPGroup -Title $Row.GroupName -ErrorAction Stop
+            Write-Host -f Green "Group '$($Row.GroupName)' Created Successfully!"
+        }
+        Else
+        {
+            #Get the Group
+            $Group = Get-PnPGroup -Identity $Row.GroupName
+        }
+        #Set Group Permissions
+        Set-PnPGroupPermissions -Identity $Group -AddRole $Row.Permission
+ 
+        #Add Users to the Group
+        $Users =  $Row.Users -split ";"
+        ForEach($User in $Users)
+        {
+            $NewUser = Add-PnPGroupMember -LoginName $User.Trim() -Identity $Group
+            Write-host -f Green "`tAdded $User to $($Group.Title)"
+        }
+    }
+}
+Catch {
+    write-host "Error: $($_.Exception.Message)" -foregroundcolor Red
+}
