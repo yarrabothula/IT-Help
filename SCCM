@@ -1,0 +1,67 @@
+Creating a package in SCCM (System Center Configuration Manager) involves several steps. Here's a general outline of the process:
+1.	Prepare the Content: Before creating a package, ensure that you have the files or programs you want to deploy ready and accessible. This may involve creating installer files, scripts, or other content.
+2.	Open the SCCM Console: Launch the SCCM console on your SCCM server or administrative workstation.
+3.	Navigate to the Packages Node: In the SCCM console, navigate to the "Software Library" workspace, expand "Application Management," and then click on "Packages."
+4.	Create a New Package: Right-click on "Packages" and select "Create Package."
+5.	Enter Package Information: In the "General" tab of the "Create Package and Program Wizard," enter the following information:
+•	Name: Provide a name for the package.
+•	Description: Optionally, provide a description for the package.
+•	Manufacturer: Enter the manufacturer's name.
+•	Language: Select the appropriate language for the package.
+6.	Specify Source Location: In the "Data Source" tab, specify the source location of the package files. This can be a network share accessible to SCCM.
+7.	Distribute Content: After specifying the source location, distribute the content to distribution points. Right-click on the package, select "Distribute Content," and follow the wizard to distribute the content to distribution points.
+8.	Create a Program: Once the package is created and content is distributed, you need to create a program to define how the package will be executed on client devices. Right-click on the package, select "Create Program," and follow the wizard to define program properties such as command-line options, requirements, and dependencies.
+9.	Deploy the Package: After creating the program, deploy the package to the desired collection of devices. Right-click on the package, select "Deploy," and follow the wizard to specify deployment settings such as target collection, deployment schedule, and user notifications.
+10.	Monitor Deployment: Monitor the deployment status in the SCCM console to ensure that the package is successfully deployed to client devices.
+Keep in mind that the specific steps and options may vary depending on the version of SCCM you are using. It's also important to thoroughly test the package deployment in a lab environment before deploying it to production systems.
+
+
+
+In Software Library
+Application Management
+Create Application Wizard
+Path of application 
+Next
+Installation behaviour like need to install system or user.
+Next
+Next
+Give the details of application like name, description, version and publisher. Installation program by default select 
+Next
+Review next 
+
+General, - software name, publisher name, veersion, file type
+Content - source upload
+Programs - picking up installed and uninstalled cmd lines
+detection method – lite
+user experience (select installation behavior like install for system time 60 mins
+
+requirement, device categoriy select os versions like win 10 or 16….
+return codes 0, 1707, 3010, 
+dependencies
+
+Select and right click and selct deploy option
+Select collection – like device collection select 
+Select distribution point
+Deploy settings – select available or forcefully installation,
+Time line 
+User experience 
+Alert
+Summary or review,
+Next
+
+
+How to check deploy or not client machine
+Control panel
+Confutation manager 
+Actions
+Need to run few features – application deployment evaluation cycle, discovery data collection user policy and machine policy
+c/windows/ccm/logs and app discovery
+
+HA – When we got hardware issue or os issue 
+DRS – Monitoring Memory and CPU 
+vSAN – Works on storage like ssd, hdd failures
+FT: Mainly working on continually availability if in case 1 host fail move to another host.
+SV Motion: Running vm moves to another physical host without any interruption.
+DHCP – Dynamically IP Assigning using centralized network configuration
+DC -  domain controller is a server windows active direactiory. Main deals with user, devices policies in secure environment.
+SCCM – System Centre Configuration Manager.
