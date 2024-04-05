@@ -1,0 +1,60 @@
+Connect-SPOService
+https://ratnaglobaltech-admin.sharepoint.com
+Add-SPOSiteCollectionAppCatalog -Site "siteurl"
+release/v14.21.3
+
+node -v
+npm install -g yo@4.3.1 
+npm install -g gulp@4.O.2
+npm install lg @microsoft/generator-sharepoint@l.14.0
+npm uninstall
+-g yo@4.3.o
+npm uninstall -g gulp@4.O.2
+npm uninstall -g @microsoft/generator-sharepoint@l.14.0
+List of installs: npm list --g --depth=0
+mkdir filename
+yo @microsoft/sharepoint for webparts generation
+gulp trust-dev-cert 
+congig - serve.json-intial page- change url
+code . connect visual studio (src - webparts-filename)
+gulp trust-dev-cert
+gulp build (compiler) 
+gulp serve
+gulp bundle --ship
+gulp package-solution --ship
+
+yo @microsoft/sharepoint --plusbeta 
+
+npm shrinkwrap  
+ 
+npm install @types/office-js --save-dev (currect js package file instalation)
+ 
+Step 1: Create client side solution using yo generator
+
+Step 2: Add client tenant
+
+Step 3: Explain to Develop where to develop the code (Type script)
+
+Step 4: After done the code compile the code using gulp build
+
+Step 5: Run the solution using gulp serve
+ 
+Step 6: Generate sharepoint package file for deploying (app catlog) sppkg
+----------------------------------------------------------
+Install SharePoint PNP Powershell; Install-Module SharePointPnPPowerShellOnline
+Connect site: Connect-PnPOnline -Url https://Crescent.sharepoint.com
+Get-Command -Module Microsoft.Online.SharePoint.PowerShell
+$AssetsLibraryURL = "https://ratnaglobaltech.sharepoint.com/sites/TestSEO/Firstone"
+Get-Command *-SPO*
+
+Connect spo site cmds	
+
+Connect-SPOService -Credential $creds -Url https://ratnaglobaltech-admin.sharepoint.com -ModernAuth $true -AuthenticationUrl https://login.microsoftonline.com/organizations
+Get-SPOHomeSite
+Get-SPOUser -Site https://contoso.sharepoint.com/sites/finance
+
+New-SPOSite -Url https://ratnaglobaltech.sharepoint.com/sites/NewLibrary -Owner siva.yarrabothula@ratnaglobaltech.com -StorageQuota 50 -Title "New Library"
+
+site collection permission:  Set-SPOUser -Site https://ratnaglobaltech.sharepoint.com/sites/TestSEO -LoginName itautomation@ratnaglobaltech.com -IsSiteCollectionAdmin $true
+
+D:\spfx\spfxdemo1>npm list --g --depth=0 C:\Users\ashok\AppData\Roaming\npm +-- @microsoft/generator-sharepoint@1.14.0 +-- gulp@4.0.2 `-- yo@4.3.0 D:\spfx\spfxdemo1>node -v v14.21.3
