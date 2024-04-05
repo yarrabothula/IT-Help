@@ -1,0 +1,39 @@
+#Set Config Parameters
+$TenantUrl = "https://poaj-admin.sharepoint.com"
+$CSVPath = "C:\Temp\SiteCollections.csv"
+ 
+#Connect to Tenant
+Connect-PnPOnline -url $TenantUrl -Interactive
+ 
+Try {
+    #Get Site Collections to create from a CSV file
+    $SiteCollections = Import-Csv -Path $CSVPath
+ 
+    #Loop through csv and create site collections from each row
+    ForEach ($Site in $SiteCollections)
+    {
+        #Get Parameters from CSV
+        $Url = $Site.Url
+        $Title = $Site.Title
+        $Owner = $Site.Owner
+        $Template = $Site.Template
+        $TimeZone = $Site.TimeZone
+ 
+        #Check if site exists already
+        $SiteExists = Get-PnPTenantSite | Where {$_.Url -eq $URL} 
+        If ($SiteExists -eq $null)
+        {
+            #Create site collection
+            Write-host "Creating Site Collection:"$Site.URL -f Yellow
+            New-PnPTenantSite -Url $URL -Title $Title -Owner $Owner -Template $Template -TimeZone $TimeZone -RemoveDeletedSite -ErrorAction Stop        
+            Write-host "`t Done!" -f Green
+        }
+        Else
+        {
+            write-host "Site $($URL) exists already!" -foregroundcolor Yellow
+        }
+    }
+}
+Catch {
+    write-host -f Red "`tError:" $_.Exception.Message
+}
