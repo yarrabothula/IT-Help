@@ -1,0 +1,105 @@
+------------------------------------------Script for export 0365 groups with members:-----------------------------------------------------------
+
+$Groups = Get-UnifiedGroup -ResultSize Unlimited
+
+$Groups | ForEach-Object {
+
+$group = $_
+
+Get-UnifiedGroupLinks -Identity $group.Name -LinkType Members -ResultSize Unlimited | ForEach-Object {
+
+      New-Object -TypeName PSObject -Property @{
+
+       Group = $group.DisplayName
+
+       Member = $_.DisplayName
+
+       EmailAddress = $_.PrimarySMTPAddress
+
+       RecipientType= $_.RecipientType
+
+}}} | Export-CSV "C:\latOffice365GroupMembers.csv" -NoTypeInformation -Encoding UTF8
+ 
+------------------------------------------------script for Export DL with members;---------------------------------------------------------
+ 
+$Result=@()
+
+$groups = Get-DistributionGroup -ResultSize Unlimited
+
+$totalmbx = $groups.Count
+
+$i = 1
+
+$groups | ForEach-Object {
+
+Write-Progress -activity "Processing $_.DisplayName" -status "$i out of $totalmbx completed"
+
+$group = $_
+
+Get-DistributionGroupMember -Identity $group.Name -ResultSize Unlimited | ForEach-Object {
+
+$member = $_
+
+$Result += New-Object PSObject -property @{
+
+GroupName = $group.DisplayName
+
+Groupmailid = $group.PrimarySMTPAddress
+
+Member = $member.Name
+
+EmailAddress = $member.PrimarySMTPAddress
+
+RecipientType= $member.RecipientType
+
+}}
+
+$i++
+
+}
+
+$Result | Export-CSV "C:\late5262All-Distribution-Group-Members.csv" -NoTypeInformation -Encoding UTF8
+ 
+------------------------Script for export Individual DL with members:------------------------------------------------------------
+
+$Result=@()
+ 
+# Define the name of the specific Distribution Group you want to export
+
+$groupName = "DL-RGT-ALLHANDS"
+ 
+# Get the Distribution Group
+
+$group = Get-DistributionGroup -Identity $groupName
+ 
+# Check if the group exists
+
+if ($group) {
+
+    $groupMembers = Get-DistributionGroupMember -Identity $groupName -ResultSize Unlimited
+ 
+    $groupMembers | ForEach-Object {
+
+        $member = $_
+
+        $Result += New-Object PSObject -property @{
+
+            GroupName     = $group.DisplayName
+
+            Member        = $member.Name
+
+            EmailAddress  = $member.PrimarySMTPAddress
+
+            RecipientType = $member.RecipientType
+
+        }
+
+    }
+ 
+    $Result | Export-CSV "C:\$groupName-Distribution-Group-Members222.csv" -NoTypeInformation -Encoding UTF8
+
+} else {
+
+    Write-Host "Distribution Group '$groupName' not found."
+
+}
