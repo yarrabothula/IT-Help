@@ -1,0 +1,4 @@
+#Windows Update: 
+Install-Module PSWindowsUpdate
+Set-ExecutionPolicy Remotessigned
+Install-WindowsUpdate
