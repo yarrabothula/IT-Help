@@ -1,0 +1,4 @@
+#open exchange server command promt; user the below commands
+Get-MailboxStatistics
+Get-Mailbox -Database Mun-MBX1| Get-MailboxStatistics | ft displayname,totaldeleteditemsize,totalitemsize
+ 
