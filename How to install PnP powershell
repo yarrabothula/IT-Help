@@ -1,0 +1,5 @@
+#Open windows powershell ; enter below commands
+Install-Module PnP.PowerShell -Scope CurrentUser
+
+#How to delete Pnp Powershell
+Uninstall-Module PnP.PowerShell -AllVersions
