@@ -1,0 +1,4 @@
+Shift+F10
+netsh interface show interface
+netsh interface set interface "" disabled
+oobe\bypassnro
