@@ -1,3 +1,12 @@
+#Install Exchange Online Management Module
+Install-Module -Name ExchangeOnlineManagement -Force
+#Update Exchange Online 
+Update-Module ExchangeOnlineManagement
+#Connect to Exchange Online
+Connect-ExchangeOnline
+
+#Read more: https://www.sharepointdiary.com/2021/11/connect-to-exchange-online-using-powershell.html#ixzz8h4og2TaG
+
 ------------------------------------------Script for export 0365 groups with members:-----------------------------------------------------------
 
 $Groups = Get-UnifiedGroup -ResultSize Unlimited
