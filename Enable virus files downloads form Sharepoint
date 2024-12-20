@@ -1,0 +1,3 @@
+Connect-SPOService -Credential $creds -Url https://tenantname-admin.sharepoint.com -ModernAuth $true -AuthenticationUrl https://login.microsoftonline.com/organizations #login sharepoint admin center
+Set-SPOTenant -DisallowInfectedFileDownload $false #for download virus files
+Set-SPOTenant -DisallowInfectedFileDownload $true #for block virus files
