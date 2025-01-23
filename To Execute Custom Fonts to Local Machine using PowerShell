@@ -1,0 +1,50 @@
+#Change to the folder where your script is saved:  cd "C:\Users\YarrabothulaSiva\OneDrive - Technohandz\Desktop"
+#Excutive Script Cmd: .\InstallFonts.ps1
+
+--------------------------------------------------------------------save this script in notepad  -------------- and edit source and destination-------------------------
+# Define the path where your font files are located (New fonts folder)
+$fontSourcePath = "C:\New fonts"  # Make sure to update with the correct folder path
+
+# Define the destination folder for fonts
+$fontDestinationPath = "C:\Windows\Fonts"
+
+# Get all font files (.ttf or .otf) in the source directory
+$fontFiles = Get-ChildItem -Path $fontSourcePath | Where-Object { $_.Extension -eq ".ttf" -or $_.Extension -eq ".otf" }
+
+# Ensure there are font files to process
+if ($fontFiles.Count -eq 0) {
+    Write-Host "No font files found in the source folder."
+} else {
+    # Iterate through each font file and install it
+    foreach ($fontFile in $fontFiles) {
+        # Copy font file to the Fonts directory
+        Copy-Item -Path $fontFile.FullName -Destination $fontDestinationPath -Force
+        Write-Host "Font copied: $($fontFile.Name)"
+
+        # Register the font with Windows using Add-Type to import C# method
+        Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public class FontInstaller {
+    [DllImport("gdi32.dll", CharSet = CharSet.Auto)]
+    public static extern int AddFontResource(string lpFileName);
+}
+"@
+        
+        # Register font with AddFontResource
+        [FontInstaller]::AddFontResource("$fontDestinationPath\$($fontFile.Name)")
+        Write-Host "Font installed: $($fontFile.Name)"
+    }
+    
+    # Refresh font cache (optional but recommended)
+    Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public class FontCache {
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern bool PostMessage(int hWnd, int msg, int wParam, int lParam);
+}
+"@
+    [FontCache]::PostMessage(0, 0x001A, 0, 0)  # Refresh font cache
+    Write-Host "Font cache refreshed!"
+}  # This closes the 'else' block
